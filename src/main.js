@@ -3,13 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Api from './lib/Api'
+import configDB from '../config/database'
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
-})
+function setupApp () {
+  new Vue({
+    el: '#app',
+    router,
+    template: '<App/>',
+    components: { App }
+  })
+}
+
+Api.init(configDB.apiKey, configDB.authDomain, configDB.databaseName).then(setupApp)
