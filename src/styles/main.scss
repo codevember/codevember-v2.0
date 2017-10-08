@@ -1,0 +1,11 @@
+@import "font";
+@include font-face(gothamBook,'/assets/fonts/gotham/book/gotham-book');
+@include font-face(gothamBold,'/assets/fonts/gotham/bold/gotham-bold');
+@include font-face(gothamMedium,'/assets/fonts/gotham/medium/gotham-medium');
+#app {
+  position: relative;
+  font-family: gothamBook;
+}
+h2 {
+  font-family: gothamBold;
+}
