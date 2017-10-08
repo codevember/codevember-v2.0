@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/components/home'
-import projectManager from '@/components/projectManager'
+import dayManager from '@/components/dayManager'
 import about from '@/components/about'
 
 import admin from '@/components/admin/admin'
@@ -20,7 +20,7 @@ export default new Router({
     {
       name: 'day',
       path: '/day/:day',
-      component: projectManager
+      component: dayManager
     },
     {
       name: 'about',

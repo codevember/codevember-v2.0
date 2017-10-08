@@ -1,20 +1,22 @@
 <template lang="html">
   <div class="home">
+    <HeaderApp></HeaderApp>
     <calendar></calendar>
+    <FooterApp></FooterApp>
   </div>
 </template>
 
 <script>
 import Calendar from '@/components/calendar'
-import HeaderTitle from '@/components/header'
-import FooterHome from '@/components/footer'
+import HeaderApp from '@/components/header'
+import FooterApp from '@/components/footer'
 
 export default {
   name:'home',
   components:{
-    HeaderTitle,
+    HeaderApp,
     Calendar,
-    FooterHome
+    FooterApp
   }
 }
 </script>
