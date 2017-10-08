@@ -6,10 +6,15 @@
 
 <script>
 import Calendar from '@/components/calendar'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
+
 export default {
   name:'home',
   components:{
-    Calendar
+    Header,
+    Calendar,
+    Footer
   }
 }
 </script>
