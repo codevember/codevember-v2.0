@@ -3,6 +3,11 @@ import Router from 'vue-router'
 import home from '@/components/home'
 import projectManager from '@/components/projectManager'
 import about from '@/components/about'
+
+import admin from '@/components/admin/admin'
+import login from '@/components/admin/login'
+
+import Api from '@/lib/Api'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +26,22 @@ export default new Router({
       name: 'about',
       path: '/about',
       component: about
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
+    },
+    {
+      path: '/admin',
+      component: admin,
+      beforeEnter (to, from, next) {
+        if (!Api.getCurrentUser()) {
+          next('/login')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '*',

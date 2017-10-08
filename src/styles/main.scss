@@ -1,7 +1,7 @@
 @import "font";
-@include font-face(gothamBook,'/assets/fonts/gotham/book/gotham-book');
-@include font-face(gothamBold,'/assets/fonts/gotham/bold/gotham-bold');
-@include font-face(gothamMedium,'/assets/fonts/gotham/medium/gotham-medium');
+@include font-face(gothamBook,'/assets/fonts/gotham/book/gotham-book', null, null, eot otf ttf svg woff);
+@include font-face(gothamBold,'/assets/fonts/gotham/bold/gotham-bold',null, null, eot ttf svg woff);
+@include font-face(gothamMedium,'/assets/fonts/gotham/medium/gotham-medium',null, null, eot otf svg woff woff2);
 #app {
   position: relative;
   font-family: gothamBook;
