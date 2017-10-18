@@ -1,14 +1,12 @@
 <template>
   <div class="home">
     <div class="calendar">
-      <div v-on:mouseover='showPrompt = !showPrompt' v-for="day in 30"class="calendar-card">
-        <router-link :to="{ name: 'day',params:{ day: day < 10 ? 0 + day.toString() : day }}">
+      <div v-on:mouseover='showPrompt = !showPrompt' v-for="day in 30"class="calendar-card" @click="routerAnim(day)">
           <div class="calendar-number">
             <h2 >
               {{ day < 10 ? 0 + day.toString() : day }}.
             </h2>
           </div>
-        </router-link>
       </div>
       <div :class="{fadeIn: showPrompt}" class="prompt-container">
         <h2 class="prompt">Prompts</h2>
@@ -19,6 +17,7 @@
 </template>
 
 <script>
+import { TweenMax } from 'gsap'
 export default {
   name: 'home',
   data () {
@@ -58,6 +57,23 @@ export default {
           })
         }
        this.layout[columnsId].elements.push(tmpLayout[i])
+      }
+    },
+    routerAnim(day){
+      let formatDay = day < 10 ? 0 + day.toString() : day
+      console.log(formatDay);
+      this.animOut(()=>{
+        this.$router.push({ name: 'day', params: { day: formatDay }})
+      })
+      //
+    },
+    animOut(cb){
+      var loop = 0
+      for (var i = 0; i < this.layout.length; i++) {
+        TweenMax.staggerFromTo(this.layout[i].elements, 0.7, {opacity:1}, {opacity:0}, 0.08, ()=> {
+          loop++
+          if(loop == this.layout.length - 1) cb()
+        });
       }
     },
     addEvent (obj, type, fn) {
