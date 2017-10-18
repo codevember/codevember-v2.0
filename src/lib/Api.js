@@ -72,9 +72,9 @@ class Api {
     return slug
   }
 
-  getContributionsOfDay (day) {
+  getContributionsOfDay (year, day) {
     return new Promise((resolve, reject) => {
-      this.contribs.orderByChild('day').equalTo(day).once('value').then((snapshot) => {
+      this.db.ref(year + '/contributions').orderByChild('day').equalTo(day).once('value').then((snapshot) => {
         let contribs = []
         snapshot.forEach((data) => {
           contribs.push(data.val())
