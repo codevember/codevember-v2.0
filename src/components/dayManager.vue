@@ -13,19 +13,21 @@
 </template>
 
 <script>
-import Api from '../lib/Api'
+import { mapGetters } from 'vuex'
+
 export default {
   name:'projectManager',
+  computed:{
+    ...mapGetters({
+      projects: 'getContribs'
+    })
+  },
   data(){
     return {
-      projects:[]
+
     }
   },
   mounted(){
-    Api.getContributionsOfDay('2016', ~~this.$route.params.day).then((contribs) => {
-      this.hasContribs = (contribs.length > 0)
-      this.projects = contribs
-    });
   }
 }
  </script>

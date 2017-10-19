@@ -18,6 +18,7 @@
 
 <script>
 import { TweenMax } from 'gsap'
+
 export default {
   name: 'home',
   data () {
@@ -61,7 +62,11 @@ export default {
     },
     routerAnim(day){
       let formatDay = day < 10 ? 0 + day.toString() : day
-      console.log(formatDay);
+      this.$store.dispatch('getContributionsOfDay', {
+        year: '2016',
+        //day must be an int for db
+        day: day
+      })
       this.animOut(()=>{
         this.$router.push({ name: 'day', params: { day: formatDay }})
       })

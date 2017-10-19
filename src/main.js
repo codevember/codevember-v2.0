@@ -4,14 +4,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Api from './lib/Api'
+import store from './lib/store'
 import configDB from '../config/database'
 
 Vue.config.productionTip = false
+
+
 
 /* eslint-disable no-new */
 function setupApp () {
   new Vue({
     el: '#app',
+    store,
     router,
     template: '<App/>',
     components: { App }

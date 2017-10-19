@@ -6,13 +6,7 @@
 
 <script>
 export default {
-  name: 'app',
-  beforeRouteUpdate (to, from, next) {
-    const toDepth = to.path.split('/').length
-    console.log(toDepth);
-   // this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
-    //next()
-  }
+  name: 'app'
 }
 </script>
 
