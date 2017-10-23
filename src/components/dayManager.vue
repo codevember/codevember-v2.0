@@ -4,8 +4,14 @@
       <h1>Day #{{$route.params.day}}</h1>
     </router-link>
     <div class="project-container">
-      <div class="project" v-for="project in projects">
-        <h2>projet</h2>
+      <div class="project-cards" v-for="project in projects">
+        <a :href="project.url">
+        <div class="project-image">
+          <img class="":src="project.image" alt="">
+        </div>
+        <h2>{{ project.author }}  </h2>
+        <h4>{{ project.title }}</h4>
+        </a>
       </div>
       <div v-if="projects.length == 0" class="no-project">
          <h2>There is no project for this day 😿</h2>
@@ -35,7 +41,8 @@ export default {
 }
  </script>
 
- <style lang="css">
+ <style lang="scss">
+ @import "../styles/project";
  .project{
    display: inline-block;
    margin-left: 20px;

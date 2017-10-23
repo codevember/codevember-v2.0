@@ -49,7 +49,6 @@ export default {
       this.buildPromptsEl()
       this.addEvent(window, 'resize', () => {
         clearTimeout(this.timeoutResize)
-        console.log('resize');
         this.timeoutResize = setTimeout(this.buildLayout(), this.windowResizeRate)
       })
     })
