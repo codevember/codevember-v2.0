@@ -6,11 +6,15 @@ Vue.use(Vuex)
 const store = {
   state: {
     count: 0,
-    contribs: []
+    contribs: [],
+    year: 2017
   },
   getters: {
     getContribs: state => {
       return state.contribs
+    },
+    getYear: state => {
+      return state.year
     }
   },
   actions: {
@@ -24,6 +28,9 @@ const store = {
   mutations: {
     dayContribs (state, contribs) {
       state.contribs = contribs
+    },
+    updateYear (state, year) {
+      state.year = year
     }
   }
 }

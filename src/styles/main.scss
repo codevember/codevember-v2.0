@@ -1,6 +1,6 @@
 @import "font";
-@include font-face(gothamBook,'/assets/fonts/gotham/book/gotham-book', null, null, eot otf ttf svg woff);
-@include font-face(gothamBold,'/assets/fonts/gotham/bold/gotham-bold',null, null, eot ttf svg woff);
+@include font-face(gothamBook,'/assets/fonts/gotham/book/gotham-book', null, null, eot  svg );
+@include font-face(gothamBold,'/assets/fonts/gotham/bold/gotham-bold',null, null, eot  svg );
 @include font-face(gothamMedium,'/assets/fonts/gotham/medium/gotham-medium',null, null, eot otf svg woff woff2);
 
 $textColor: #3C3C3C;
@@ -22,6 +22,6 @@ h1{
   margin-bottom: 0.5em;
   line-height: 0;
 }
-h2{
+h2, h3,h4{
   font-family: gothamBold;
 }

@@ -12,12 +12,16 @@
         <h2 class="prompt">Prompts</h2>
       </div>
     </div>
-
+    <div class="year-selector">
+      <h4 @click="updateYear(2017)" :class='{"selected-year": yearSelected == 2017}'>2017</h4>
+      <h4 @click="updateYear(2016)" :class='{"selected-year": yearSelected == 2016}'>2016</h4>
+    </div>
   </div>
 </template>
 
 <script>
 import { TweenMax } from 'gsap'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'home',
@@ -35,17 +39,27 @@ export default {
       ]
     }
   },
+  computed:{
+    ...mapGetters({
+      yearSelected: 'getYear'
+    })
+  },
   mounted(){
     this.$nextTick(()=>{
       this.buildLayout()
       this.addEvent(window, 'resize', () => {
         clearTimeout(this.timeoutResize)
+        console.log('resize');
         this.timeoutResize = setTimeout(this.buildLayout(), this.windowResizeRate)
       })
     })
   },
   methods:{
     buildLayout(){
+      this.layout = [{
+        columns:0,
+        elements:[]
+      }]
       let tmpLayout = this.$el.querySelectorAll('.calendar-card')
       let columnsId = 0
       tmpLayout.length > 0 && this.layout[columnsId].elements.push(tmpLayout[0])
@@ -63,14 +77,17 @@ export default {
     routerAnim(day){
       let formatDay = day < 10 ? 0 + day.toString() : day
       this.$store.dispatch('getContributionsOfDay', {
-        year: '2016',
         //day must be an int for db
+        year: this.yearSelected,
         day: day
       })
       this.animOut(()=>{
         this.$router.push({ name: 'day', params: { day: formatDay }})
       })
       //
+    },
+    updateYear(year){
+      this.$store.commit('updateYear', year)
     },
     animOut(cb){
       var loop = 0

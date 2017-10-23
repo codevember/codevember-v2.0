@@ -7,6 +7,9 @@
       <div class="project" v-for="project in projects">
         <h2>projet</h2>
       </div>
+      <div v-if="projects.length == 0" class="no-project">
+         <h2>There is no project for this day 😿</h2>
+      </div>
 
     </div>
   </div>
