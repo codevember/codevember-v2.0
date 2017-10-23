@@ -1,16 +1,16 @@
 <template>
   <div class="home">
     <div class="calendar">
-      <div v-on:mouseover='showPrompt = !showPrompt' v-for="day in 30"class="calendar-card" @click="routerAnim(day)">
-          <div class="calendar-number">
-            <h2 >
+      <div  v-for="day in 30"class="calendar-card" @click="routerAnim(day)">
+          <div v-on:mouseover='showPrompt(day)'v-on:mouseleave='hidePrompt(day)' class="calendar-number">
+            <h2>
               {{ day < 10 ? 0 + day.toString() : day }}.
             </h2>
           </div>
       </div>
-      <div :class="{fadeIn: showPrompt}" class="prompt-container">
-        <h2 class="prompt">Prompts</h2>
-      </div>
+    </div>
+    <div  class="prompt-container prompt" v-for="prompt in prompts" >
+      <h2   >{{prompt}}</h2>
     </div>
     <div class="year-selector">
       <h4 @click="updateYear(2017)" :class='{"selected-year": yearSelected == 2017}'>2017</h4>
@@ -20,23 +20,22 @@
 </template>
 
 <script>
+//:class="{fadeIn: false}"
 import { TweenMax } from 'gsap'
 import { mapGetters } from 'vuex'
-
+import prompts from '../lib/prompts.js'
 export default {
   name: 'home',
   data () {
     return {
-      showPrompt: false,
       windowResizeRate: 200,
       timeoutResize :{},
       layout:[{
         columns:0,
         elements:[]
       }],
-      prompts:[
-        ''
-      ]
+      prompts,
+      promptsEl:[]
     }
   },
   computed:{
@@ -47,6 +46,7 @@ export default {
   mounted(){
     this.$nextTick(()=>{
       this.buildLayout()
+      this.buildPromptsEl()
       this.addEvent(window, 'resize', () => {
         clearTimeout(this.timeoutResize)
         console.log('resize');
@@ -74,10 +74,12 @@ export default {
        this.layout[columnsId].elements.push(tmpLayout[i])
       }
     },
+    buildPromptsEl(){
+      this.promptsEl = this.$el.querySelectorAll('.prompt')
+    },
     routerAnim(day){
       let formatDay = day < 10 ? 0 + day.toString() : day
       this.$store.dispatch('getContributionsOfDay', {
-        //day must be an int for db
         year: this.yearSelected,
         day: day
       })
@@ -97,6 +99,13 @@ export default {
           if(loop == this.layout.length - 1) cb()
         });
       }
+    },
+    showPrompt(day){
+      let eltest = this.promptsEl
+      this.promptsEl[day - 1].classList.add('fadeIn')
+    },
+    hidePrompt(day){
+      this.promptsEl[day - 1].classList.remove('fadeIn')
     },
     addEvent (obj, type, fn) {
       if (obj.addEventListener) {
