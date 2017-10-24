@@ -25,3 +25,32 @@ h1{
 h2, h3,h4{
   font-family: gothamBold;
 }
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  display: block;
+  border: 0;
+  border: solid 1px #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  font-size: 1.3em;
+  width: 300px;
+  outline: none;
+}
+
+select {
+  font-size: 1em;
+}
+
+button {
+  border: 0;
+  padding: 15px 30px;
+  margin: 0 0 20px;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+}
