@@ -7,7 +7,7 @@ const store = {
   state: {
     count: 0,
     contribs: [],
-    year: 2017
+    year: 2016
   },
   getters: {
     getContribs: state => {
