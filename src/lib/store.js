@@ -7,7 +7,8 @@ const store = {
   state: {
     count: 0,
     contribs: [],
-    year: 2017
+    year: 2017,
+    callStatus: false
   },
   getters: {
     getContribs: state => {
@@ -15,13 +16,18 @@ const store = {
     },
     getYear: state => {
       return state.year
+    },
+    getCallStatus: state => {
+      return state.callStatus
     }
   },
   actions: {
     getContributionsOfDay ({commit, state}, args) {
+      commit('updateCallStatus', true)
       Api.getContributionsOfDay(args.year, args.day).then(contribs => {
         this.hasContribs = (contribs.length > 0)
         commit('dayContribs', contribs)
+        commit('updateCallStatus', false)
       })
     }
   },
@@ -31,6 +37,9 @@ const store = {
     },
     updateYear (state, year) {
       state.year = year
+    },
+    updateCallStatus (state, bool) {
+      state.callStatus = bool
     }
   }
 }

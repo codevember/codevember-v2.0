@@ -83,7 +83,7 @@ export default {
         day: day
       })
       this.animOut(()=>{
-        this.$router.push({ name: 'day', params: { day: formatDay }})
+        this.$router.push({ name: 'day', params: { day: formatDay, year: this.yearSelected }})
       })
       //
     },
@@ -100,7 +100,6 @@ export default {
       }
     },
     showPrompt(day){
-      let eltest = this.promptsEl
       this.promptsEl[day - 1].classList.add('fadeIn')
     },
     hidePrompt(day){
