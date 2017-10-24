@@ -20,7 +20,7 @@ export default new Router({
     },
     {
       name: 'day',
-      path: '/day/:day/:year',
+      path: '/:year/day/:day',
       component: dayManager
     },
     {
