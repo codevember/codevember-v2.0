@@ -43,6 +43,7 @@
 .calendar-number > h2{
   text-align: center;
   line-height: 100px;
+  font-weight:700;
   transition: .3s all;
   margin:0;
 }
@@ -62,7 +63,7 @@
     display: inline-block;
     cursor: pointer;
     margin-right: 25px;
-        margin-bottom: 8px;
+    margin-bottom: 8px;
     font-size: 2.5em;
     color:#bfbfbf;
     transition: all .4s;

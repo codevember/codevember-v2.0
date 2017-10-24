@@ -13,7 +13,7 @@
         <h4>{{ project.title }}</h4>
         </a>
       </div>
-      <div v-if="projects.length == 0" class="no-project">
+      <div v-if="projects.length == 0 && !this.isLoading" class="no-project">
          <h2>There is no project for this day 😿</h2>
       </div>
 
@@ -28,7 +28,8 @@ export default {
   name:'projectManager',
   computed:{
     ...mapGetters({
-      projects: 'getContribs'
+      projects: 'getContribs',
+      isLoading: 'getCallStatus'
     })
   },
   data(){
@@ -37,6 +38,15 @@ export default {
     }
   },
   mounted(){
+    this.$nextTick(()=>{
+       var test = this.$route
+       if (!this.isLoading && this.projects.length == 0) {
+          this.$store.dispatch('getContributionsOfDay', {
+            year: this.$route.params.year,
+            day: parseInt(this.$route.params.day)
+          })
+       }
+    })
   }
 }
  </script>
