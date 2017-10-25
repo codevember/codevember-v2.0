@@ -80,6 +80,7 @@ export default {
         title: this.title,
         url: this.url,
         image: this.image,
+        year: ~~this.year,
         day: ~~this.day
       }).then(() => {
         this.saved = true;

@@ -1,12 +1,10 @@
 import firebase from 'firebase'
 
 class Api {
-  constructor () {}
-
   init (apiKey, authDomain, dbName) {
     this.apiKey = apiKey
     this.authDomain = authDomain
-    this.url = 'https://' + dbName + '.firebaseio.com/'
+    this.url = `https://${dbName}.firebaseio.com/`
     this.dbName = dbName
     this.user = undefined
     return this.initFirebase()
@@ -21,7 +19,6 @@ class Api {
       })
 
       this.db = firebase.database()
-      this.contribs = this.db.ref('contributions')
 
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -43,30 +40,18 @@ class Api {
       }
 
       value.slug = this.generateSlug(value)
-      let newContrib = this.contribs.push()
+      let newContrib = this.db.ref(`${value.year}/contributions`).push()
       newContrib.set(value)
       resolve()
-    })
-  }
-
-  getAllContributions () {
-    return new Promise((resolve, reject) => {
-      this.contribs.once('value').then((snapshot) => {
-        let contribs = []
-        snapshot.forEach((data) => {
-          contribs.push(data.val())
-        })
-        resolve(contribs)
-      })
     })
   }
 
   generateSlug (value) {
     let slug = ''
     if (value.day < 10) {
-      slug = '0'
+      value.day = `0${value.day}`
     }
-    slug += `${value.day} ${value.title} ${value.author}`
+    slug += `${value.year} ${value.day} ${value.title} ${value.author}`
     slug = slug.replace(/\s/g, '-').toLowerCase()
 
     return slug
@@ -74,25 +59,12 @@ class Api {
 
   getContributionsOfDay (year, day) {
     return new Promise((resolve, reject) => {
-      this.db.ref(year + '/contributions').orderByChild('day').equalTo(day).once('value').then((snapshot) => {
+      this.db.ref(`${year}/contributions`).orderByChild('day').equalTo(day).once('value').then((snapshot) => {
         let contribs = []
         snapshot.forEach((data) => {
           contribs.push(data.val())
         })
         resolve(contribs)
-      })
-    })
-  }
-
-  getContributionBySlug (slug) {
-    return new Promise((resolve, reject) => {
-      this.contribs.orderByChild('slug').equalTo(slug).once('value').then((snapshot) => {
-        let obj
-        for (let id in snapshot.val()) {
-          obj = snapshot.val()[id]
-        }
-
-        resolve(obj)
       })
     })
   }
