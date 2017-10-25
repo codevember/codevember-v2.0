@@ -1,7 +1,7 @@
 .prompt-container{
   position: absolute;
   text-align: center;
-  top: -10%;
+  top: 7%;
   left: 0;
   font-size: 4em;
   user-select: none;
@@ -9,7 +9,6 @@
   transition: .3s all;
   width: 100%;
   opacity: 0;
-  height: 100%;
 }
 
 .calendar{

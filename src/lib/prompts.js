@@ -7,7 +7,7 @@ const prompts = [
   'Storm',
   'Pillow',
   'Fridge',
-  'Pants',
+  'French Fries',
   'Rocket',
   'Bike',
   'Zebra',
