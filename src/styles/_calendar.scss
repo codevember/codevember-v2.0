@@ -56,10 +56,26 @@
     line-height: -5%;
    }
 }
-
+.after-calendar{
+  width: 100%;
+  &:after{
+    content: '';
+    display: block;
+    width: 100%;
+    clear: both;
+  }
+}
+.social{
+  display: inline-block;
+  float: left;
+  margin-left: 5%;
+  h4{
+    font-size: 2em;
+  }
+}
 .year-selector{
-  text-align: right;
-
+  float: right;
+  display: inline-block;
   h4{
     display: inline-block;
     cursor: pointer;

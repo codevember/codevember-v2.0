@@ -9,10 +9,19 @@
           </div>
       </div>
     </div>
-    <div class="year-selector">
-      <h4 @click="updateYear(2017)" :class='{"selected-year": yearSelected == 2017}'>2017</h4>
-      <h4 @click="updateYear(2016)" :class='{"selected-year": yearSelected == 2016}'>2016</h4>
+    <div class="after-calendar">
+      <div class="social">
+        <a href="https://twitter.com/codevember_">
+         <h4>tw</h4>
+        </a>
+
+      </div>
+      <div class="year-selector">
+        <h4 @click="updateYear(2017)" :class='{"selected-year": yearSelected == 2017}'>2017</h4>
+        <h4 @click="updateYear(2016)" :class='{"selected-year": yearSelected == 2016}'>2016</h4>
+      </div>
     </div>
+
     <div  class="prompt-container prompt" v-for="prompt in prompts" >
       <h2   >{{prompt}}</h2>
     </div>
