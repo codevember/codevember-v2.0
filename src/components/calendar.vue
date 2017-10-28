@@ -2,7 +2,7 @@
   <div class="home">
     <div class="calendar">
       <div  v-for="day in 30"class="calendar-card" @click="routerAnim(day)">
-          <div v-on:mouseover='showPrompt(day)'v-on:mouseleave='hidePrompt(day)' class="calendar-number">
+          <div v-on:mouseover='showPrompt($event,day)'v-on:mouseleave='hidePrompt($event, day)' class="calendar-number">
             <h2>
               {{ day < 10 ? 0 + day.toString() : day }}.
             </h2>
@@ -34,6 +34,7 @@ export default {
         columns:0,
         elements:[]
       }],
+      calendarWidth: 100,
       prompts,
       promptsEl:[]
     }
@@ -46,10 +47,14 @@ export default {
   mounted(){
     this.$nextTick(()=>{
       this.buildLayout()
+      this.resizeCalendarCard()
       this.buildPromptsEl()
       this.addEvent(window, 'resize', () => {
         clearTimeout(this.timeoutResize)
-        this.timeoutResize = setTimeout(this.buildLayout(), this.windowResizeRate)
+        this.timeoutResize = setTimeout(()=>{
+          this.buildLayout()
+          this.resizeCalendarCard()
+        }, this.windowResizeRate)
       })
     })
   },
@@ -71,6 +76,16 @@ export default {
           })
         }
        this.layout[columnsId].elements.push(tmpLayout[i])
+      }
+    },
+    resizeCalendarCard(){
+      let cards = this.$el.querySelectorAll('.calendar-card')
+      let calendar = this.$el.querySelector('.calendar').getBoundingClientRect()
+      this.calendarWidth = ( calendar.width / 7 ) > 100 ? calendar.width / 7 : 100
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].style.width = this.calendarWidth + 'px'
+        cards[i].style.height = this.calendarWidth + 'px'
+        cards[i].firstChild.firstChild.style.lineHeight = this.calendarWidth + 'px'
       }
     },
     buildPromptsEl(){
@@ -99,10 +114,12 @@ export default {
         });
       }
     },
-    showPrompt(day){
+    showPrompt(self, day){
+      self.target.style.lineHeight = this.calendarWidth * 0.90 + 'px'
       this.promptsEl[day - 1].classList.add('fadeIn')
     },
-    hidePrompt(day){
+    hidePrompt(self, day){
+      self.target.firstChild.style.lineHeight = this.calendarWidth  + 'px'
       this.promptsEl[day - 1].classList.remove('fadeIn')
     },
     addEvent (obj, type, fn) {
