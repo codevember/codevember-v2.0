@@ -66,11 +66,22 @@
     margin-right: 25px;
     margin-bottom: 8px;
     font-size: 2.5em;
-    color:#bfbfbf;
     transition: all .4s;
+    opacity: 0.2;
+    border-bottom: solid 0px #005872;
   }
   .selected-year{
-    color:#383838;
+    opacity: 1;
+    &:after{
+      content: '';
+      display: block;
+      width:10px;
+      height: 10px;
+      background: #3C3C3C;
+      border-radius: 50px;
+      margin-left:50%;
+
+    }
   }
 }
 .fadeIn{
