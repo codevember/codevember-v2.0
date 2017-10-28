@@ -9,12 +9,12 @@
           </div>
       </div>
     </div>
-    <div  class="prompt-container prompt" v-for="prompt in prompts" >
-      <h2   >{{prompt}}</h2>
-    </div>
     <div class="year-selector">
       <h4 @click="updateYear(2017)" :class='{"selected-year": yearSelected == 2017}'>2017</h4>
       <h4 @click="updateYear(2016)" :class='{"selected-year": yearSelected == 2016}'>2016</h4>
+    </div>
+    <div  class="prompt-container prompt" v-for="prompt in prompts" >
+      <h2   >{{prompt}}</h2>
     </div>
   </div>
 </template>
@@ -45,9 +45,9 @@ export default {
     })
   },
   mounted(){
+    this.buildLayout()
+    this.resizeCalendarCard()
     this.$nextTick(()=>{
-      this.buildLayout()
-      this.resizeCalendarCard()
       this.buildPromptsEl()
       this.addEvent(window, 'resize', () => {
         clearTimeout(this.timeoutResize)
@@ -85,7 +85,7 @@ export default {
       for (var i = 0; i < cards.length; i++) {
         cards[i].style.width = this.calendarWidth + 'px'
         cards[i].style.height = this.calendarWidth + 'px'
-        cards[i].firstChild.firstChild.style.fontSize = this.calendarWidth * 0.3 + 'px'
+        cards[i].firstChild.firstChild.style.fontSize = this.calendarWidth * 0.3   + 'px'
         cards[i].firstChild.firstChild.style.lineHeight = this.calendarWidth + 'px'
       }
     },

@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="header">
-    <img :src="logo" alt="#Codevember">
+    <h1 class="text-logo">#Codevember</h1>
   </div>
 </template>
 
