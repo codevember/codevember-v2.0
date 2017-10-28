@@ -85,6 +85,7 @@ export default {
       for (var i = 0; i < cards.length; i++) {
         cards[i].style.width = this.calendarWidth + 'px'
         cards[i].style.height = this.calendarWidth + 'px'
+        cards[i].firstChild.firstChild.style.fontSize = this.calendarWidth * 0.3 + 'px'
         cards[i].firstChild.firstChild.style.lineHeight = this.calendarWidth + 'px'
       }
     },
