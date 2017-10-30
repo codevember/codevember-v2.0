@@ -23,7 +23,13 @@
   text-align: left;
   width: 250px;
   padding: 20px;
+  transition: all .3s;
    overflow: hidden;
+   & :hover{
+   .project-image{
+      filter: blur(0px);
+    }
+  }
   .project-image{
     z-index: -1;
     margin-left: 50px;
@@ -32,9 +38,11 @@
     height: 150px;
     width:150px;
     filter: blur(5px);
+ transition: all .5s;
     background-position: center;
     border-radius: 100px;
   }
+
   .project-title{
     transform: translate(0%, -115px);
     text-align: center;
