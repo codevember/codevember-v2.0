@@ -44,6 +44,7 @@ export default {
         elements:[]
       }],
       calendarWidth: 100,
+      calendarFontSize: 0.27,
       prompts,
       promptsEl:[]
     }
@@ -94,7 +95,7 @@ export default {
       for (var i = 0; i < cards.length; i++) {
         cards[i].style.width = this.calendarWidth + 'px'
         cards[i].style.height = this.calendarWidth + 'px'
-        cards[i].firstChild.firstChild.style.fontSize = this.calendarWidth * 0.3   + 'px'
+        cards[i].firstChild.firstChild.style.fontSize = this.calendarWidth * this.calendarFontSize   + 'px'
         cards[i].firstChild.firstChild.style.lineHeight = this.calendarWidth + 'px'
       }
     },

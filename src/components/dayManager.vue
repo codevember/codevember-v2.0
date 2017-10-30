@@ -1,16 +1,23 @@
 <template lang="html">
   <div class="dayManager">
-    <router-link :to="{name:'home'}">
+    <div class="day-header">
+      <router-link :to="{name:'home'}">
+        <h1 class="back-button"><-Back</h1>
+      </router-link>
       <h1>Day #{{$route.params.day}}</h1>
-    </router-link>
+    </div>
+
     <div class="project-container">
       <div class="project-cards" v-for="project in projects">
         <a :href="project.url">
-        <div class="project-image">
-          <img class="":src="project.image" alt="">
+        <div class="project-image" :style="'background-image : url(' + project.image + ')'">
+
         </div>
-        <h2>{{ project.author }}  </h2>
-        <h4>{{ project.title }}</h4>
+        <div class="project-title">
+          <h2>{{ project.author }}  </h2>
+          <h4>{{ project.title }}</h4>
+        </div>
+
         </a>
       </div>
       <div v-if="projects.length == 0 && !this.isLoading" class="no-project">
