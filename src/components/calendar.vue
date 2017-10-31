@@ -127,6 +127,8 @@ export default {
       }
     },
     showPrompt(self, day){
+      if (this.yearSelected === 2016) return
+
       self.target.style.lineHeight = this.calendarWidth * 0.90 + 'px'
       this.promptsEl[day - 1].classList.add('fadeIn')
     },
