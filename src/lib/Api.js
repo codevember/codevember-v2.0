@@ -48,10 +48,11 @@ class Api {
 
   generateSlug (value) {
     let slug = ''
+    let strDay = value.day
     if (value.day < 10) {
-      value.day = `0${value.day}`
+      strDay = `0${value.day}`
     }
-    slug += `${value.year} ${value.day} ${value.title} ${value.author}`
+    slug += `${value.year} ${strDay} ${value.title} ${value.author}`
     slug = slug.replace(/\s/g, '-').toLowerCase()
 
     return slug
