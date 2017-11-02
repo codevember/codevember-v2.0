@@ -78,7 +78,6 @@ export default {
       let columnsId = 0
       tmpLayout.length > 0 && this.layout[columnsId].elements.push(tmpLayout[0])
       for (var i = 1; i < tmpLayout.length; i++) {
-        console.log(tmpLayout[i].getBoundingClientRect().top );
         if((tmpLayout[i].getBoundingClientRect().top != tmpLayout[i-1].getBoundingClientRect().top) || this.layout[columnsId].elements.length >= 7){
           columnsId++
           this.layout.push({

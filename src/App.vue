@@ -1,12 +1,23 @@
 <template>
   <div id="app">
     <router-view/>
+    <loader v-if='isLoading'></loader>
   </div>
 </template>
 
 <script>
+import loader from './components/loader'
+import { mapGetters } from 'vuex'
 export default {
-  name: 'app'
+  name: 'app',
+  components:{
+    loader
+  },
+  computed:{
+    ...mapGetters({
+      isLoading: 'getCallStatus'
+    })
+  }
 }
 </script>
 
