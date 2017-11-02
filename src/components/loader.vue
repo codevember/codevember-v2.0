@@ -1,35 +1,43 @@
 <template lang="html">
-  <div class="Home-loader">
-    <div class="Home-loader-points">
-      <div class="Point-loader"></div>
-      <div class="Point-loader"></div>
-      <div class="Point-loader"></div>
-      <div class="Point-loader"></div>
+  <div class="home-loader">
+    <div class="home-loader-points">
+      <div class="Point-loader" v-for="i in 4" :style="{ animationDelay: i * 0.2 + 's', background:colors[i-1]}"></div>
     </div>
 </div>
 </template>
 
 <script>
 export default {
+  name:'loader',
+  data(){
+    return{
+      colors:['#005872' ,'#4d9aa9' ,'#0e7286' ,'#002029']
+    }
+  }
 }
+/*
+
+      animation-delay: $i*0.2s;
+      background: $colors_Load[$i - 1]; */
 </script>
 
 <style lang="scss">
-$colors_Load = array( #005872 ,#4d9aa9 ,#0e7286 ,#002029 )
+$colors_Load: #005872 ,#4d9aa9 ,#0e7286 ,#002029 ;
 
-.Home-loader{
-  position: absolute;
-  top: 60px;
+.home-loader{
+  pointer-events: none;
+  position: fixed;
+  top: 0px;
   left: 0;
-  width :100%;
-  height :95%;
-  background: white;
+  width:100vw;
+  height:100vh;
+  background: rgba(255,255,255,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index :1;
   & .points{
-      height 30px
+      height: 30px;
   }
 }
 
@@ -43,13 +51,7 @@ $colors_Load = array( #005872 ,#4d9aa9 ,#0e7286 ,#002029 )
   border-radius: 10px;
   margin: 5px;
   float: left;
-  @for $i from 1 through 4
-    &:nth-child({$i}){
-      animation:Bounce ease-in-out infinite alternate both .4s;
-      animation-delay: $i*0.2s;
-      background: $colors_Load[$i - 1];
-    }
-
+  animation:Bounce ease-in-out infinite alternate both .4s;
 }
 
 @keyframes Bounce {
