@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <router-view/>
-    <loader v-if='isLoading'></loader>
+    <transition name="fade">
+      <loader v-show='isLoading && $route.name == "day"'></loader>
+    </transition>
   </div>
 </template>
 
@@ -23,5 +25,11 @@ export default {
 
 <style lang="scss">
 @import 'styles/main.scss';
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}
 
 </style>

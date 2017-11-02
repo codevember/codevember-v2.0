@@ -25,6 +25,7 @@ export default {
 $colors_Load: #005872 ,#4d9aa9 ,#0e7286 ,#002029 ;
 
 .home-loader{
+  pointer-events: none;
   position: fixed;
   top: 0px;
   left: 0;
