@@ -32,6 +32,27 @@ class Api {
     })
   }
 
+  checkExsitance (year, link) {
+    return new Promise((resolve, reject) => {
+      this.db.ref(`${year}/contributions`).once('value')
+        .then((snapshot) => {
+          let exists = false
+
+          let testLink = link.replace('https://', 'http://')
+
+          snapshot.forEach(data => {
+            let dataUrl = data.val().url.replace('https://', 'http://')
+
+            if (testLink === dataUrl) {
+              exists = true
+            }
+          })
+
+          resolve(exists)
+        })
+    })
+  }
+
   saveContribution (value) {
     return new Promise((resolve, reject) => {
       if (!this.user) {
@@ -39,10 +60,16 @@ class Api {
         return
       }
 
-      value.slug = this.generateSlug(value)
-      let newContrib = this.db.ref(`${value.year}/contributions`).push()
-      newContrib.set(value)
-      resolve()
+      this.checkExsitance(value.year, value.url)
+        .then((exists) => {
+          if (exists === false) {
+            value.slug = this.generateSlug(value)
+            let newContrib = this.db.ref(`${value.year}/contributions`).push()
+            newContrib.set(value)
+          }
+
+          resolve()
+        })
     })
   }
 
