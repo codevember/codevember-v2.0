@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Api from '../../lib/Api';
+import Api from 'backend-api/dist/browser.js';
 import * as Codepen from '../../lib/codepen-parser'
 
 const today = new Date()

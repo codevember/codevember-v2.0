@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Api from './Api'
+import Api from 'backend-api/dist/browser.js'
 Vue.use(Vuex)
 
 const store = {
