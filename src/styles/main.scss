@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700,800');
 
 $textColor: #3C3C3C;
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   position: relative;
   font-family: 'Montserrat';

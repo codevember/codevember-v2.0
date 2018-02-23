@@ -1,36 +1,54 @@
-.day-header{
-  margin-top: 0.5em;
+.day-header {
+  margin-top: 24px;
   margin-left: 20px;
   width: auto;
   line-height: 100%;
   position: fixed;
   z-index: 1000;
   top: 0;
-  h1{
+
+  h1 {
     display: inline-block;
   }
-  .back-button{
-    color: #DADADA;
+
+  .back-button {
+    display: inline-block;
+    opacity: 0.2;
+    transition: opacity 0.3s;
     margin-right: 40px;
+    font-size: 1.2em;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
-.project-container{
+
+.project {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.project-container {
   text-align: center;
   margin-top: 80px;
 }
-.project-cards{
+
+.project-cards {
   display: inline-block;
   text-align: left;
   width: 250px;
   padding: 20px;
   transition: all .3s;
-   overflow: hidden;
-   & :hover{
-   .project-image{
+  overflow: hidden;
+
+  &:hover {
+    .project-image {
       box-shadow: grey 0px 0px 20px 0px;
     }
   }
-  .project-image{
+
+  .project-image {
     z-index: -1;
     margin-left: 50px;
     box-shadow: grey 0px 0px 0px 0px;
@@ -42,7 +60,7 @@
     background-position: center;
   }
 
-  .project-title{
+  .project-title {
     transform: translate(0%, 0px);
     text-align: center;
     text-shadow: rgb(237, 237, 237) 0px 0 30px;

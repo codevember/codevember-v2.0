@@ -3,15 +3,15 @@
     <div class="home-loader-points">
       <div class="Point-loader" v-for="i in 4" :style="{ animationDelay: i * 0.2 + 's', background:colors[i-1]}"></div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
   name:'loader',
-  data(){
-    return{
-      colors:['#005872' ,'#4d9aa9' ,'#0e7286' ,'#002029']
+  data() {
+    return {
+      colors: ['#005872' ,'#4d9aa9' ,'#0e7286' ,'#002029']
     }
   }
 }
@@ -40,9 +40,6 @@ $colors_Load: #005872 ,#4d9aa9 ,#0e7286 ,#002029 ;
       height: 30px;
   }
 }
-
-
-
 
 .Point-loader{
   width: 15px;

@@ -141,16 +141,6 @@ export default {
       if (!this.promptsEl[day - 1]) return
 
       this.promptsEl[day - 1].classList.remove('fadeIn')
-    },
-
-    addEvent (obj, type, fn) {
-      if (obj.addEventListener) {
-        obj.addEventListener(type, fn, false)
-      } else if (obj.attachEvent) {
-        obj.attachEvent('on' + type, () => {
-          return fn.call(obj, window.event)
-        })
-      }
     }
   }
 }
