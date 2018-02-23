@@ -34,19 +34,16 @@
 import { TweenMax } from 'gsap'
 import { mapGetters } from 'vuex'
 import prompts from '../lib/prompts.js'
+
 export default {
   name: 'home',
   data () {
     return {
-      windowResizeRate: 200,
-      timeoutResize :{},
       layout:[{
         columns:0,
         elements:[]
       }],
-      cardWidth: 100,
-      calendarFontSize: 0.27,
-      prompts,
+      prompts: [],
       promptsEl:[]
     }
   },
@@ -56,9 +53,7 @@ export default {
     })
   },
   mounted() {
-    this.$nextTick(() => {
-      this.promptsEl = this.$el.querySelectorAll('.prompt')
-    })
+    this.definePrompts()
   },
   methods:{
     routerAnim(day){
@@ -72,8 +67,16 @@ export default {
       })
     },
 
+    definePrompts () {
+      this.prompts = prompts[this.yearSelected]
+      this.$nextTick(() => {
+        this.promptsEl = this.$el.querySelectorAll('.prompt')
+      })
+    },
+
     updateYear(year){
       this.$store.commit('updateYear', year)
+      this.definePrompts()
     },
 
     animOut(cb){
@@ -87,12 +90,14 @@ export default {
     },
 
     showPrompt(self, day){
-      if (this.yearSelected === 2016) return
+      if (!this.promptsEl[day - 1]) return
 
       this.promptsEl[day - 1].classList.add('fadeIn')
     },
 
     hidePrompt(self, day){
+      if (!this.promptsEl[day - 1]) return
+
       this.promptsEl[day - 1].classList.remove('fadeIn')
     },
 
