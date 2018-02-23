@@ -19,13 +19,12 @@
 
       </div>
       <div class="year-selector">
-        <h4 @click="updateYear(2017)" :class='{"selected-year": yearSelected == 2017}'>2017</h4>
-        <h4 @click="updateYear(2016)" :class='{"selected-year": yearSelected == 2016}'>2016</h4>
+        <h4 v-for="year in availableYears" @click="updateYear(year)" :class='{"selected-year": yearSelected == year}'>{{ year }}</h4>
       </div>
     </div>
 
-    <div  class="prompt-container prompt" v-for="prompt in prompts" >
-      <h2   >{{prompt}}</h2>
+    <div class="prompt-container prompt" v-for="prompt in prompts" >
+      <h2 >{{prompt}}</h2>
     </div>
   </div>
 </template>
@@ -34,6 +33,7 @@
 import { TweenMax } from 'gsap'
 import { mapGetters } from 'vuex'
 import prompts from '../lib/prompts.js'
+import {getCurrentYear} from '../lib/utils.js'
 
 export default {
   name: 'home',
@@ -44,7 +44,8 @@ export default {
         elements:[]
       }],
       prompts: [],
-      promptsEl:[]
+      promptsEl: [],
+      availableYears: []
     }
   },
   computed:{
@@ -53,6 +54,15 @@ export default {
     })
   },
   mounted() {
+    let years = []
+    for (let y in prompts) {
+      if (y > getCurrentYear()) continue
+
+      years.push(y)
+    }
+    years.sort((a, b) => a < b)
+
+    this.availableYears = years
     this.definePrompts()
   },
   methods:{

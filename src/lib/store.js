@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Api from 'backend-api/dist/browser.js'
+import {getCurrentYear} from './utils.js'
 Vue.use(Vuex)
 
 const store = {
   state: {
     count: 0,
     contribs: [],
-    year: 2017,
+    year: getCurrentYear(),
     callStatus: false
   },
   getters: {
