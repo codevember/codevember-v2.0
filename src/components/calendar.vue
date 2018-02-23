@@ -1,9 +1,11 @@
 <template>
   <div class="home">
     <div class="calendar">
-      <div  v-for="day in 30"class="calendar-card" @click="routerAnim(day)">
-          <div v-on:mouseover='showPrompt($event,day)'v-on:mouseleave='hidePrompt($event, day)' class="calendar-number">
-            <h2>
+      <div  v-for="day in 30" class="calendar-item" @click="routerAnim(day)">
+          <div v-on:mouseover='showPrompt($event,day)'v-on:mouseleave='hidePrompt($event, day)' class="calendar-card">
+            <div class="calendar-card-gradient"></div>
+            <div class="calendar-card-bg"></div>
+            <h2 class="calendar-card-number">
               {{ day < 10 ? 0 + day.toString() : day }}.
             </h2>
           </div>
@@ -29,7 +31,6 @@
 </template>
 
 <script>
-//:class="{fadeIn: false}"
 import { TweenMax } from 'gsap'
 import { mapGetters } from 'vuex'
 import prompts from '../lib/prompts.js'
@@ -43,7 +44,7 @@ export default {
         columns:0,
         elements:[]
       }],
-      calendarWidth: 100,
+      cardWidth: 100,
       calendarFontSize: 0.27,
       prompts,
       promptsEl:[]
@@ -54,54 +55,12 @@ export default {
       yearSelected: 'getYear'
     })
   },
-  mounted(){
-    this.buildLayout()
-    this.resizeCalendarCard()
-    this.$nextTick(()=>{
-      this.buildPromptsEl()
-      this.addEvent(window, 'resize', () => {
-        clearTimeout(this.timeoutResize)
-        this.timeoutResize = setTimeout(()=>{
-          this.buildLayout()
-          this.resizeCalendarCard()
-        }, this.windowResizeRate)
-      })
+  mounted() {
+    this.$nextTick(() => {
+      this.promptsEl = this.$el.querySelectorAll('.prompt')
     })
   },
   methods:{
-    buildLayout(){
-      this.layout = [{
-        columns:0,
-        elements:[]
-      }]
-      let tmpLayout = this.$el.querySelectorAll('.calendar-card')
-      let columnsId = 0
-      tmpLayout.length > 0 && this.layout[columnsId].elements.push(tmpLayout[0])
-      for (var i = 1; i < tmpLayout.length; i++) {
-        if((tmpLayout[i].getBoundingClientRect().top != tmpLayout[i-1].getBoundingClientRect().top) || this.layout[columnsId].elements.length >= 7){
-          columnsId++
-          this.layout.push({
-            columns:columnsId,
-            elements:[]
-          })
-        }
-       this.layout[columnsId].elements.push(tmpLayout[i])
-      }
-    },
-    resizeCalendarCard(){
-      let cards = this.$el.querySelectorAll('.calendar-card')
-      let calendar = this.$el.querySelector('.calendar').getBoundingClientRect()
-      this.calendarWidth = ( calendar.width / 7 ) > 100 ? calendar.width / 7 : 100
-      for (var i = 0; i < cards.length; i++) {
-        cards[i].style.width = this.calendarWidth + 'px'
-        cards[i].style.height = this.calendarWidth + 'px'
-        cards[i].firstChild.firstChild.style.fontSize = this.calendarWidth * this.calendarFontSize   + 'px'
-        cards[i].firstChild.firstChild.style.lineHeight = this.calendarWidth + 'px'
-      }
-    },
-    buildPromptsEl(){
-      this.promptsEl = this.$el.querySelectorAll('.prompt')
-    },
     routerAnim(day){
       let formatDay = day < 10 ? 0 + day.toString() : day
       this.$store.dispatch('getContributionsOfDay', {
@@ -111,11 +70,12 @@ export default {
       this.animOut(()=>{
         this.$router.push({ name: 'day', params: { day: formatDay, year: this.yearSelected }})
       })
-      //
     },
+
     updateYear(year){
       this.$store.commit('updateYear', year)
     },
+
     animOut(cb){
       var loop = 0
       for (var i = 0; i < this.layout.length; i++) {
@@ -125,16 +85,17 @@ export default {
         });
       }
     },
+
     showPrompt(self, day){
       if (this.yearSelected === 2016) return
 
-      self.target.style.lineHeight = this.calendarWidth * 0.90 + 'px'
       this.promptsEl[day - 1].classList.add('fadeIn')
     },
+
     hidePrompt(self, day){
-      self.target.firstChild.style.lineHeight = this.calendarWidth  + 'px'
       this.promptsEl[day - 1].classList.remove('fadeIn')
     },
+
     addEvent (obj, type, fn) {
       if (obj.addEventListener) {
         obj.addEventListener(type, fn, false)
