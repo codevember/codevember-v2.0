@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
+import { Cubic, TimelineMax } from 'gsap'
 import { mapGetters } from 'vuex'
 import prompts from '../lib/prompts.js'
 import {getCurrentYear} from '../lib/utils.js'
@@ -39,13 +39,11 @@ export default {
   name: 'home',
   data () {
     return {
-      layout:[{
-        columns:0,
-        elements:[]
-      }],
       prompts: [],
       promptsEl: [],
-      availableYears: []
+      availableYears: [],
+      calendarLines: [],
+      itemsPerLine: 0
     }
   },
   computed:{
@@ -64,6 +62,9 @@ export default {
 
     this.availableYears = years
     this.definePrompts()
+    this.onResize()
+
+    window.addEventListener('resize', this.onResize)
   },
   methods:{
     routerAnim(day){
@@ -72,9 +73,33 @@ export default {
         year: this.yearSelected,
         day: day
       })
-      this.animOut(()=>{
+      this.animOut(() => {
         this.$router.push({ name: 'day', params: { day: formatDay, year: this.yearSelected }})
       })
+    },
+
+    onResize () {
+      let calendar = this.$el.querySelector('.calendar')
+      let items = this.$el.querySelectorAll('.calendar-item')
+      let itemsPerLine = Math.floor(calendar.offsetWidth / items[0].offsetWidth)
+
+      if (itemsPerLine === this.itemsPerLine) return
+
+      this.itemsPerLine = itemsPerLine
+
+      let nbLines = Math.ceil(items.length / itemsPerLine)
+
+      this.calendarLines = []
+
+      let curr = 0
+      for (let l = 0; l < nbLines; l++) {
+        this.calendarLines[l] = []
+
+        for (var i = 0; i < itemsPerLine; i++) {
+          this.calendarLines[l].push(items[curr])
+          curr++
+        }
+      }
     },
 
     definePrompts () {
@@ -85,17 +110,24 @@ export default {
     },
 
     updateYear(year){
-      this.$store.commit('updateYear', year)
-      this.definePrompts()
+      this.animOut(() => {
+        this.$store.commit('updateYear', year)
+        this.definePrompts()
+        this.animIn()
+      })
     },
 
-    animOut(cb){
-      var loop = 0
-      for (var i = 0; i < this.layout.length; i++) {
-        TweenMax.staggerFromTo(this.layout[i].elements, 0.7, {opacity:1}, {opacity:0}, 0.08, ()=> {
-          loop++
-          if(loop == this.layout.length - 1) cb()
-        });
+    animIn() {
+      let tl = new TimelineMax()
+      tl.staggerTo(this.calendarLines, 0.6, {y: 0, alpha: 1, ease: Cubic.easeOut}, -0.08, 0.2)
+    },
+
+    animOut(cb) {
+      let tl = new TimelineMax()
+      tl.staggerTo(this.calendarLines, 0.6, {y: -50, alpha: 0, ease: Cubic.easeOut}, 0.08, 0)
+      tl.to(this.promptsEl, 0.4, {alpha: 0, ease: Cubic.easeOut}, 0)
+      if (cb) {
+        tl.add(cb, 0.8)
       }
     },
 
